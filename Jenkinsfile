@@ -19,7 +19,7 @@ pipeline {
 //                     sh "cp \$my-private-key /src/main/resources/my-private-key.der"
 //                     sh "ls"
 //                     sh "echo ${my_private_key}"
-                    sh "scp -P 2225 -i ${my-private-key} target/qa-0.0.1-SNAPSHOT.war ubuntu@192.168.1.109:qa.war"
+                    sh "scp -P 2225 -i ${my_private_key} target/qa-0.0.1-SNAPSHOT.war ubuntu@192.168.1.109:qa.war"
                     echo "------------------------deployed---------------------"
                 }
             }
