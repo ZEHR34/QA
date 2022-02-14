@@ -37,7 +37,7 @@ node {
             USERNAMEI = credentials('DB_uername_entropia')
         }
         stage("run app") {
-            sshCommand remote: remote, command "echo dasda > test.txt"//$DB_URL $USERNAMEI $PASSWORD > test.txt"
+            sshCommand remote: remote, command: "echo dasda > test.txt"//$DB_URL $USERNAMEI $PASSWORD > test.txt"
 //             writeFile file: 'start.sh', text: '''
 //                                                   if ssh -i /home/id_rsa -p 2225 ubuntu@192.168.1.109 "pkill java"
 //                                                   then echo 1
