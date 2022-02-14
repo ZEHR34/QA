@@ -13,12 +13,12 @@ pipeline {
 //                 sh "mvn package -D PORT=9636 -D JDBC_DATABASE_USERNAME=${USERNAMEI} -D JDBC_DATABASE_PASSWORD=${PASSWORD} -D JDBC_DATABASE_URL=${DB_URL}"
                 sh "ls -al target/"
                 sh ''' echo "
-                       if ssh -i /home/id_rsa -p 2225 ubuntu@192.168.1.109 "pkill java"
+                       if pkill java
                        then echo 1
                        else echo 2
                        fi
                        nohup java -jar qa.war --JDBC_DATABASE_URL=${DB_URL} --JDBC_DATABASE_USERNAME=${USERNAMEI} --JDBC_DATABASE_PASSWORD=${PASSWORD}
-                     " > start.sh "'''
+                       " > start.sh  '''
                 echo "------------------URA-----------------------"
             }
         }
