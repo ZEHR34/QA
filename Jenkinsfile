@@ -9,18 +9,8 @@ pipeline {
     stages {
         stage('build / test') {
             steps {
-                echo 'Hello world!'
                 sh "ls -al"
 //                 sh "mvn package -D PORT=9636 -D JDBC_DATABASE_USERNAME=${USERNAMEI} -D JDBC_DATABASE_PASSWORD=${PASSWORD} -D JDBC_DATABASE_URL=${DB_URL}"
-                sh "ls -al target/"
-                sh ''' echo "
-                       if pkill java
-                       then echo 1
-                       else echo 2
-                       fi
-                       java -jar qa.war --JDBC_DATABASE_URL=${DB_URL} --JDBC_DATABASE_USERNAME=${USERNAMEI} --JDBC_DATABASE_PASSWORD=${PASSWORD} > log
-                       " > start.sh  '''
-                echo "------------------URA-----------------------"
             }
         }
         stage("deploy"){
@@ -30,7 +20,8 @@ pipeline {
         }
         stage('run') {
             steps {
-                sh "echo ${SSHKEY}"
+                echo "-------------------------------------------------------------------------------"
+                sh "echo ls"
                 sh '''
                     if ssh -i /home/id_rsa -p 2225 ubuntu@192.168.1.109 "pkill java"
                     then echo 1
