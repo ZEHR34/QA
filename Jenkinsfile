@@ -9,12 +9,17 @@ pipeline {
     stages {
         stage('build / test') {
             steps {
-                sh "mvn package -D PORT=9636 -D JDBC_DATABASE_USERNAME=${USERNAMEI} -D JDBC_DATABASE_PASSWORD=${PASSWORD} -D JDBC_DATABASE_URL=${DB_URL}"
+                echo "start build"
+//                 sh "mvn package -D PORT=9636 -D JDBC_DATABASE_USERNAME=${USERNAMEI} -D JDBC_DATABASE_PASSWORD=${PASSWORD} -D JDBC_DATABASE_URL=${DB_URL}"
             }
         }
         stage("deploy"){
             steps{
-                sh "scp -P 2225 -i /home/id_rsa target/qa-0.0.1-SNAPSHOT.war ubuntu@192.168.1.109:qa.war"
+                withCredentials([file(credentialsId: 'ssh_privat_file', variable: 'my-private-key')]) {
+//                     sh "cp \$my-private-key /src/main/resources/my-private-key.der"
+                    sh "scp -P 2225 -i \$my-private-key target/qa-0.0.1-SNAPSHOT.war ubuntu@192.168.1.109:qa.war"
+                    echo "deployed"
+                }
             }
         }
         stage('run') {
