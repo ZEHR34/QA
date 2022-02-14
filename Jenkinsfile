@@ -17,7 +17,7 @@ pipeline {
                        then echo 1
                        else echo 2
                        fi
-                       nohup java -jar qa.war --JDBC_DATABASE_URL=${DB_URL} --JDBC_DATABASE_USERNAME=${USERNAMEI} --JDBC_DATABASE_PASSWORD=${PASSWORD} &
+                       java -jar qa.war --JDBC_DATABASE_URL=${DB_URL} --JDBC_DATABASE_USERNAME=${USERNAMEI} --JDBC_DATABASE_PASSWORD=${PASSWORD} > log
                        " > start.sh  '''
                 echo "------------------URA-----------------------"
             }
@@ -46,7 +46,7 @@ node {
             USERNAMEI = credentials('DB_uername_entropia')
         }
         stage("run app") {
-            sshCommand remote: remote, command: "bash start.sh" // $USERNAMEI $PASSWORD > test.txt"
+            sshCommand remote: remote, command: "nohub 'bash start.sh' & exit " // $USERNAMEI $PASSWORD > test.txt"
         }
     }
 }
