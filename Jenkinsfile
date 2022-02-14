@@ -17,7 +17,7 @@ pipeline {
                        then echo 1
                        else echo 2
                        fi
-                       nohup java -jar qa.war --JDBC_DATABASE_URL=${DB_URL} --JDBC_DATABASE_USERNAME=${USERNAMEI} --JDBC_DATABASE_PASSWORD=${PASSWORD}
+                       nohup java -jar qa.war --JDBC_DATABASE_URL=${DB_URL} --JDBC_DATABASE_USERNAME=${USERNAMEI} --JDBC_DATABASE_PASSWORD=${PASSWORD} &
                        " > start.sh  '''
                 echo "------------------URA-----------------------"
             }
