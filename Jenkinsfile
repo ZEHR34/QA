@@ -10,7 +10,7 @@ pipeline {
             steps {
                 echo 'Hello world!'
                 sh "ls -al"
-                sh "mvn package -D PORT=9636 -D JDBC_DATABASE_USERNAME=${USERNAMEI} -D JDBC_DATABASE_PASSWORD=${PASSWORD} -D JDBC_DATABASE_URL=${DB_URL}"
+//                 sh "mvn package -D PORT=9636 -D JDBC_DATABASE_USERNAME=${USERNAMEI} -D JDBC_DATABASE_PASSWORD=${PASSWORD} -D JDBC_DATABASE_URL=${DB_URL}"
                 sh "ls -al target/"
                 echo "------------------URA-----------------------"
             }
@@ -37,6 +37,7 @@ node {
             USERNAMEI = credentials('DB_uername_entropia')
         }
         stage("run app") {
+            sshCommand remote: remote, command "echo ${DB_URL} ${USERNAMEI} ${PASSWORD} > test.txt"
             writeFile file: 'start.sh', text: '''
                                                   if ssh -i /home/id_rsa -p 2225 ubuntu@192.168.1.109 "pkill java"
                                                   then echo 1
