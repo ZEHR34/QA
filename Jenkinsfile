@@ -33,7 +33,9 @@ remote.allowAnyHosts = true
 node {
     withCredentials([sshUserPrivateKey(credentialsId: 'ssh-key-for-app-server', keyFileVariable: 'identity', passphraseVariable: '', usernameVariable: 'userName')]) {
         remote.user = userName
-//         remote.identityFile = identity
+        echo userName
+        echo "---------------000--------------"
+        remote.identityFile = identity
         remote.password = '1234'
         stage("deploy") {
             sshPut remote: remote, from: 'target/qa-0.0.1-SNAPSHOT.war', into: '/home/ubuntu/qa.war'
