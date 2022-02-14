@@ -12,7 +12,7 @@ pipeline {
             steps {
                 echo 'Hello world!'
                 sh "ls -al"
-                sh "mvn package -D PORT=9636 -D JDBC_DATABASE_USERNAME=${params.URL} -D JDBC_DATABASE_PASSWORD=${params.USERNAME} -D JDBC_DATABASE_URL=${URL}"
+                sh "mvn package -D PORT=9636 -D JDBC_DATABASE_USERNAME=${params.USERNAME} -D JDBC_DATABASE_PASSWORD=${params.PASSWORD} -D JDBC_DATABASE_URL=${URL}"
                 sh "ls -al /target"
             }
         }
