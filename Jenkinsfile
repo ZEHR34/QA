@@ -13,15 +13,15 @@ node {
 //             password(name: 'PASSWORD', description: 'DB_PASSWORD')
 //         }
 //     stages {
-        stage('package') {
-            steps {
-                echo 'Hello world!'
-                sh "ls -al"
-                sh "mvn package -D PORT=9636 -D JDBC_DATABASE_USERNAME=$USERNAME -D JDBC_DATABASE_PASSWORD=$PASSWORD -D JDBC_DATABASE_URL=$DB_URL"
-                sh "ls -al target/"
-                echo "------------------URA-----------------------"
-            }
-        }
+//         stage('package') {
+//             steps {
+//                 echo 'Hello world!'
+//                 sh "ls -al"
+//                 sh "mvn package -D PORT=9636 -D JDBC_DATABASE_USERNAME=$USERNAME -D JDBC_DATABASE_PASSWORD=$PASSWORD -D JDBC_DATABASE_URL=$DB_URL"
+//                 sh "ls -al target/"
+//                 echo "------------------URA-----------------------"
+//             }
+//         }
 
         def remote = [:]
         remote.allowAnyHosts = true
