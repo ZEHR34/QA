@@ -4,7 +4,7 @@ pipeline {
         DB_URL = credentials('db_url_192.168.1.109')
         PASSWORD = credentials('db_password_for192.168.1.109_1234')
         USERNAMEI = credentials('DB_uername_entropia')
-        SSHKEY = credentials('ssh-key-for-app-server')
+        SSHKEY = credentials('ssh_privat_file')
     }
     stages {
         stage('build / test') {
@@ -30,6 +30,7 @@ pipeline {
         }
         stage('run') {
             steps {
+                sh "echo ${SSHKEY}"
                 sh '''
                     if ssh -i /home/id_rsa -p 2225 ubuntu@192.168.1.109 "pkill java"
                     then echo 1
