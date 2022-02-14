@@ -25,7 +25,7 @@ pipeline {
         }
         stage("deploy"){
             steps{
-                echo ${SSHKEY}
+                sh "echo ${SSHKEY}"
                 sh "scp -P 2225 -i /home/id_rsa target/qa-0.0.1-SNAPSHOT.war ubuntu@192.168.1.109:qa.war"
             }
         }
