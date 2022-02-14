@@ -21,7 +21,7 @@ pipeline {
         stage('run') {
             steps {
                 echo "-------------------------------------------------------------------------------"
-                sh "echo ls"
+                sh "ls"
                 sh '''
                     if ssh -i /home/id_rsa -p 2225 ubuntu@192.168.1.109 "pkill java"
                     then echo 1
