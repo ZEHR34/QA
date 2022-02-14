@@ -36,8 +36,8 @@ node {
             PASSWORD = credentials('db_password_for192.168.1.109_1234')
             USERNAMEI = credentials('DB_uername_entropia')
         }
-//         stage("run app") {
-//             sshCommand remote: remote, command "echo $DB_URL $USERNAMEI $PASSWORD > test.txt"
+        stage("run app") {
+            sshCommand remote: remote, command "echo dasda > test.txt"//$DB_URL $USERNAMEI $PASSWORD > test.txt"
 //             writeFile file: 'start.sh', text: '''
 //                                                   if ssh -i /home/id_rsa -p 2225 ubuntu@192.168.1.109 "pkill java"
 //                                                   then echo 1
@@ -46,7 +46,7 @@ node {
 //                                                   nohup java -jar qa.war --JDBC_DATABASE_URL=$1 --JDBC_DATABASE_USERNAME=$2 --JDBC_DATABASE_PASSWORD=$3
 //                                               '''
 //             sshCommand remote: remote, command "bash start.sh ${DB_URL} ${USERNAMEI} ${PASSWORD}"
-//         }
+        }
     }
 }
 
