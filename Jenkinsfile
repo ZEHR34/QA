@@ -25,6 +25,7 @@ pipeline {
         stage('publeesh'){
             steps{
                 node {
+                    def remote = [:]
                     remote.allowAnyHosts = true
                     remote.name = "node-1"
                     remote.host = "192.168.1.109"
