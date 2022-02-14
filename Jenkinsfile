@@ -10,7 +10,7 @@ pipeline {
             steps {
                 echo 'Hello world!'
                 sh "ls -al"
-//                 sh "mvn package -D PORT=9636 -D JDBC_DATABASE_USERNAME=${USERNAMEI} -D JDBC_DATABASE_PASSWORD=${PASSWORD} -D JDBC_DATABASE_URL=${DB_URL}"
+                sh "mvn package -D PORT=9636 -D JDBC_DATABASE_USERNAME=${USERNAMEI} -D JDBC_DATABASE_PASSWORD=${PASSWORD} -D JDBC_DATABASE_URL=${DB_URL}"
                 sh "ls -al target/"
                 echo "------------------URA-----------------------"
             }
@@ -29,7 +29,7 @@ node {
 //         remote.identityFile = identity
         remote.password = '1234'
         stage("SSH Steps Rocks!") {
-            sshPut remote: remote, from: 'target/qa-0.0.1-SNAPSHOT.war', into: '/home/ubuntu/'
+            sshPut remote: remote, from: 'target/qa-0.0.1-SNAPSHOT.war', into: '/home/ubuntu/qa.war'
         }
     }
 }
