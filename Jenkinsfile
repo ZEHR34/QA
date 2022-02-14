@@ -33,6 +33,9 @@ remote.allowAnyHosts = true
 node {
     withCredentials([sshUserPrivateKey(credentialsId: 'ssh-key-for-app-server', keyFileVariable: 'identity', passphraseVariable: '', usernameVariable: 'userName')]) {
         remote.user = userName
+        echo "---------------000--------------"
+        echo identity
+        echo "---------------000--------------"
         echo userName
         echo "---------------000--------------"
         remote.identityFile = identity
