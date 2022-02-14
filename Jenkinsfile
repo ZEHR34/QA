@@ -12,7 +12,7 @@ pipeline {
 //
 //             password(name: 'PASSWORD', description: 'DB_PASSWORD')
 //         }
-    stages {
+    node {
         stage('package') {
             steps {
                 echo 'Hello world!'
@@ -22,18 +22,17 @@ pipeline {
                 echo "------------------URA-----------------------"
             }
         }
-        node {
-            def remote = [:]
-            remote.allowAnyHosts = true
-            remote.name = "node-1"
-            remote.host = "192.168.1.109"
-            remote.port = "2225"
-            withCredentials([sshUserPrivateKey(credentialsId: 'ssh-key-for-app-server', keyFileVariable: 'identity', passphraseVariable: '', usernameVariable: 'userName')]) {
-                remote.user = userName
-                remote.identityFile = identity
-                stage("SSH Steps Rocks!") {
-                    sshPut remote: remote, from: 'target/qa-0.0.1-SNAPSHOT.war', into: '.'
-                }
+
+        def remote = [:]
+        remote.allowAnyHosts = true
+        remote.name = "node-1"
+        remote.host = "192.168.1.109"
+        remote.port = "2225"
+        withCredentials([sshUserPrivateKey(credentialsId: 'ssh-key-for-app-server', keyFileVariable: 'identity', passphraseVariable: '', usernameVariable: 'userName')]) {
+            remote.user = userName
+            remote.identityFile = identity
+            stage("SSH Steps Rocks!") {
+                sshPut remote: remote, from: 'target/qa-0.0.1-SNAPSHOT.war', into: '.'
             }
         }
     }
