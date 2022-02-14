@@ -11,7 +11,7 @@ pipeline {
             steps {
                 echo 'Hello world!'
                 sh "ls -al"
-                sh "mvn package -D PORT=9636 -D JDBC_DATABASE_USERNAME=${USERNAMEI} -D JDBC_DATABASE_PASSWORD=${PASSWORD} -D JDBC_DATABASE_URL=${DB_URL}"
+//                 sh "mvn package -D PORT=9636 -D JDBC_DATABASE_USERNAME=${USERNAMEI} -D JDBC_DATABASE_PASSWORD=${PASSWORD} -D JDBC_DATABASE_URL=${DB_URL}"
                 sh "ls -al target/"
                 sh ''' echo "
                        if pkill java
@@ -25,7 +25,9 @@ pipeline {
         }
         stage("deploy"){
             steps{
+                echo "------------------------------------------"
                 sh "echo ${SSHKEY}"
+                echo "------------------------------------------"
                 sh "scp -P 2225 -i /home/id_rsa target/qa-0.0.1-SNAPSHOT.war ubuntu@192.168.1.109:qa.war"
             }
         }
