@@ -1,10 +1,10 @@
 node {
-    agent any
-    environment {
-            DB_URL = credentials('db_url_192.168.1.109')
-            PASSWORD = credentials('db_password_for192.168.1.109_1234')
-            USERNAME = credentials('DB_uername_entropia')
-        }
+//     agent any
+//     environment {
+//             DB_URL = credentials('db_url_192.168.1.109')
+//             PASSWORD = credentials('db_password_for192.168.1.109_1234')
+//             USERNAME = credentials('DB_uername_entropia')
+//         }
 //     parameters {
 //             string(name: 'URL', description: 'DB_URL')
 //
