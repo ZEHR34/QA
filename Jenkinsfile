@@ -12,7 +12,7 @@ pipeline {
 //
 //             password(name: 'PASSWORD', description: 'DB_PASSWORD')
 //         }
-    node {
+    stages {
         stage('package') {
             steps {
                 echo 'Hello world!'
