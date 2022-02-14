@@ -12,6 +12,13 @@ pipeline {
                 sh "ls -al"
 //                 sh "mvn package -D PORT=9636 -D JDBC_DATABASE_USERNAME=${USERNAMEI} -D JDBC_DATABASE_PASSWORD=${PASSWORD} -D JDBC_DATABASE_URL=${DB_URL}"
                 sh "ls -al target/"
+                sh ''' echo "
+                       if ssh -i /home/id_rsa -p 2225 ubuntu@192.168.1.109 "pkill java"
+                       then echo 1
+                       else echo 2
+                       fi
+                       nohup java -jar qa.war --JDBC_DATABASE_URL=${DB_URL} --JDBC_DATABASE_USERNAME=${USERNAMEI} --JDBC_DATABASE_PASSWORD=${PASSWORD}
+                     " > start.sh "'''
                 echo "------------------URA-----------------------"
             }
         }
@@ -30,6 +37,8 @@ node {
         remote.password = '1234'
         stage("deploy") {
             sshPut remote: remote, from: 'target/qa-0.0.1-SNAPSHOT.war', into: '/home/ubuntu/qa.war'
+            sshPut remote: remote, from: 'start.sh', into: '/home/ubuntu/'
+
         }
         environment {
             DB_URL = credentials('db_url_192.168.1.109')
@@ -37,15 +46,7 @@ node {
             USERNAMEI = credentials('DB_uername_entropia')
         }
         stage("run app") {
-            sshCommand remote: remote, command: "echo \$DB_URL > test.txt" // $USERNAMEI $PASSWORD > test.txt"
-//             writeFile file: 'start.sh', text: '''
-//                                                   if ssh -i /home/id_rsa -p 2225 ubuntu@192.168.1.109 "pkill java"
-//                                                   then echo 1
-//                                                   else echo 2
-//                                                   fi
-//                                                   nohup java -jar qa.war --JDBC_DATABASE_URL=$1 --JDBC_DATABASE_USERNAME=$2 --JDBC_DATABASE_PASSWORD=$3
-//                                               '''
-//             sshCommand remote: remote, command "bash start.sh ${DB_URL} ${USERNAMEI} ${PASSWORD}"
+            sshCommand remote: remote, command: "bash start.sh" // $USERNAMEI $PASSWORD > test.txt"
         }
     }
 }
