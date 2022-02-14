@@ -44,7 +44,7 @@ node {
                                                   fi
                                                   nohup java -jar qa.war --JDBC_DATABASE_URL=$1 --JDBC_DATABASE_USERNAME=$2 --JDBC_DATABASE_PASSWORD=$3
                                               '''
-            sshCommand remote: remote, command "bash start.sh ${DB_URL} ${USERNAMEI} ${PASSWORD}":
+            sshCommand remote: remote, command "bash start.sh ${DB_URL} ${USERNAMEI} ${PASSWORD}"
         }
     }
 }
