@@ -6,12 +6,12 @@ remote.allowAnyHosts = true
 
 pipeline {
     agent any
+    environment {
+        DB_URL = credentials('db_url_192.168.1.109')
+        PASSWORD = credentials('db_password_for192.168.1.109_1234')
+        USERNAMEI = credentials('DB_uername_entropia')
+    }
     stages {
-        environment {
-            DB_URL = credentials('db_url_192.168.1.109')
-            PASSWORD = credentials('db_password_for192.168.1.109_1234')
-            USERNAMEI = credentials('DB_uername_entropia')
-        }
         stage('Example Username/Password') {
             steps {
                 echo 'Hello world!'
