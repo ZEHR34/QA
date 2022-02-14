@@ -46,7 +46,7 @@ node {
             USERNAMEI = credentials('DB_uername_entropia')
         }
         stage("run app") {
-            sshCommand remote: remote, command: "nohub 'bash start.sh' & exit " // $USERNAMEI $PASSWORD > test.txt"
+            sshCommand remote: remote, command: "bash start.sh & exit " // $USERNAMEI $PASSWORD > test.txt"
         }
     }
 }
