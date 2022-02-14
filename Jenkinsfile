@@ -9,8 +9,8 @@ pipeline {
     stages {
         stage('build / test') {
             steps {
-                echo "start build"
-//                 sh "mvn package -D PORT=9636 -D JDBC_DATABASE_USERNAME=${USERNAMEI} -D JDBC_DATABASE_PASSWORD=${PASSWORD} -D JDBC_DATABASE_URL=${DB_URL}"
+//                 echo "start build"
+                sh "mvn package -D PORT=9636 -D JDBC_DATABASE_USERNAME=${USERNAMEI} -D JDBC_DATABASE_PASSWORD=${PASSWORD} -D JDBC_DATABASE_URL=${DB_URL}"
             }
         }
         stage("deploy"){
@@ -20,13 +20,13 @@ pipeline {
 //                     sh "ls"
 //                     sh "echo ${my_private_key}"
                     sh "scp -P 2225 -i ${my_private_key} target/qa-0.0.1-SNAPSHOT.war ubuntu@192.168.1.109:qa.war"
-                    echo "------------------------deployed---------------------"
+//                     echo "------------------------deployed---------------------"
                 }
             }
         }
         stage('run') {
             steps {
-                echo "-------------------------------------------------------------------------------"
+//                 echo "-------------------------------------------------------------------------------"
                 sh '''
                     if ssh -i /home/id_rsa -p 2225 ubuntu@192.168.1.109 "pkill java"
                     then echo 1
