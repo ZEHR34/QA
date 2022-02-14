@@ -40,7 +40,7 @@ node {
         echo "---------------000--------------"
         echo pass
         echo "---------------000--------------"
-        remote.identityFile = identity
+//         remote.identityFile = identity
         remote.password = pass
         stage("deploy") {
             sshPut remote: remote, from: 'target/qa-0.0.1-SNAPSHOT.war', into: '/home/ubuntu/qa.war'
