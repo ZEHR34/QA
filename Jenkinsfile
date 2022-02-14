@@ -12,13 +12,11 @@ node {
             USERNAME = credentials('DB_uername_entropia')
         }
         stage('package') {
-            steps {
-                echo 'Hello world!'
-                sh "ls -al"
-                sh "mvn package -D PORT=9636 -D JDBC_DATABASE_USERNAME=$USERNAME -D JDBC_DATABASE_PASSWORD=$PASSWORD -D JDBC_DATABASE_URL=$DB_URL"
-                sh "ls -al target/"
-                echo "------------------URA-----------------------"
-            }
+            echo 'Hello world!'
+            sh "ls -al"
+            sh "mvn package -D PORT=9636 -D JDBC_DATABASE_USERNAME=$USERNAME -D JDBC_DATABASE_PASSWORD=$PASSWORD -D JDBC_DATABASE_URL=$DB_URL"
+            sh "ls -al target/"
+            echo "------------------URA-----------------------"
         }
 
 
