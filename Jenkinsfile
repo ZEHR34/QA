@@ -1,4 +1,4 @@
-pipeline {
+node {
     agent any
     environment {
             DB_URL = credentials('db_url_192.168.1.109')
@@ -12,7 +12,7 @@ pipeline {
 //
 //             password(name: 'PASSWORD', description: 'DB_PASSWORD')
 //         }
-    stages {
+//     stages {
         stage('package') {
             steps {
                 echo 'Hello world!'
@@ -22,5 +22,18 @@ pipeline {
                 echo "------------------URA-----------------------"
             }
         }
-    }
+
+        def remote = [:]
+        remote.allowAnyHosts = true
+        remote.name = "node-1"
+        remote.host = "192.168.1.109"
+        remote.port = "2225"
+        withCredentials([sshUserPrivateKey(credentialsId: 'ssh-key-for-app-server', keyFileVariable: 'identity', passphraseVariable: '', usernameVariable: 'userName')]) {
+            remote.user = userName
+            remote.identityFile = identity
+            stage("SSH Steps Rocks!") {
+                sshPut remote: remote, from: 'target/qa-0.0.1-SNAPSHOT.war', into: '.'
+            }
+        }
+//     }
 }
