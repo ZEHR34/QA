@@ -17,6 +17,8 @@ pipeline {
             steps{
                 withCredentials([file(credentialsId: 'ssh_privat_file', variable: 'my-private-key')]) {
 //                     sh "cp \$my-private-key /src/main/resources/my-private-key.der"
+                    sh "ls"
+                    sh "echo \$my-private-key"
                     sh "scp -P 2225 -i \$my-private-key target/qa-0.0.1-SNAPSHOT.war ubuntu@192.168.1.109:qa.war"
                     echo "deployed"
                 }
