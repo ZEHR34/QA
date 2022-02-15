@@ -9,8 +9,8 @@ pipeline {
     stages {
         stage('build / test') {
             steps {
-                echo "start build"
-//                 sh "mvn package -D PORT=9636 -D JDBC_DATABASE_USERNAME=${USERNAMEI} -D JDBC_DATABASE_PASSWORD=${PASSWORD} -D JDBC_DATABASE_URL=${DB_URL}"
+//                 echo "start build"
+                sh "mvn package -D PORT=9636 -D JDBC_DATABASE_USERNAME=${USERNAMEI} -D JDBC_DATABASE_PASSWORD=${PASSWORD} -D JDBC_DATABASE_URL=${DB_URL}"
             }
         }
         stage("deploy"){
@@ -33,7 +33,6 @@ pipeline {
                     else echo 2
                     fi
                     ssh -i /home/id_rsa -p 2225 ubuntu@192.168.1.109 "nohup java -jar qa.war --JDBC_DATABASE_URL=${DB_URL} --JDBC_DATABASE_USERNAME=${USERNAMEI} --JDBC_DATABASE_PASSWORD=${PASSWORD}" > /dev/null &
-                    ssh -i /home/id_rsa -p 2225 ubuntu@192.168.1.109 "echo ${DB_URL}>bd_url"
                 '''
 //                 sh "mvn package -D PORT=9636 -D JDBC_DATABASE_USERNAME=${USERNAMEI} -D JDBC_DATABASE_PASSWORD=${PASSWORD} -D JDBC_DATABASE_URL=${DB_URL}"
 //                 sh "ls -al target/"
