@@ -27,17 +27,18 @@ pipeline {
         }
         stage('run') {
             steps {
-//                 echo "-------------------------------------------------------------------------------"
-                sh '''
-                    if ssh -i /home/id_rsa ubuntu@${APP_SERVER} "pkill java"
-                    then echo 1
-                    else echo 2
-                    fi
-                    ssh -i /home/id_rsa ubuntu@${APP_SERVER} "nohup java -jar qa.war --JDBC_DATABASE_URL=${DB_URL} --JDBC_DATABASE_USERNAME=${USERNAMEI} --JDBC_DATABASE_PASSWORD=${PASSWORD}" > /dev/null &
-                '''
-//                 sh "mvn package -D PORT=9636 -D JDBC_DATABASE_USERNAME=${USERNAMEI} -D JDBC_DATABASE_PASSWORD=${PASSWORD} -D JDBC_DATABASE_URL=${DB_URL}"
-//                 sh "ls -al target/"
-//                 echo "------------------URA-----------------------"
+                withCredentials([file(credentialsId: 'ssh_privat_file', variable: 'my_private_key')]) {
+                    sh '''
+                        if ssh -i /home/id_rsa ubuntu@${APP_SERVER} "pkill java"
+                        then echo 1
+                        else echo 2
+                        fi
+                        ssh -i ${my_private_key} ubuntu@${APP_SERVER} "nohup java -jar qa.war --JDBC_DATABASE_URL=${DB_URL} --JDBC_DATABASE_USERNAME=${USERNAMEI} --JDBC_DATABASE_PASSWORD=${PASSWORD}" > /dev/null &
+                    '''
+    //                 sh "mvn package -D PORT=9636 -D JDBC_DATABASE_USERNAME=${USERNAMEI} -D JDBC_DATABASE_PASSWORD=${PASSWORD} -D JDBC_DATABASE_URL=${DB_URL}"
+    //                 sh "ls -al target/"
+    //                 echo "------------------URA-----------------------"
+                }
             }
         }
     }
