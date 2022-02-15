@@ -20,7 +20,7 @@ pipeline {
 //                     sh "cp \$my-private-key /src/main/resources/my-private-key.der"
 //                     sh "ls"
 //                     sh "echo ${my_private_key}"
-                    sh "scp -P 2225 -i ${my_private_key} target/qa-0.0.1-SNAPSHOT.war ubuntu@${APP_SERVER}:qa.war"
+                    sh "scp -i ${my_private_key} target/qa-0.0.1-SNAPSHOT.war ubuntu@${APP_SERVER}:qa.war"
 //                     echo "------------------------deployed---------------------"
                 }
             }
@@ -29,11 +29,11 @@ pipeline {
             steps {
 //                 echo "-------------------------------------------------------------------------------"
                 sh '''
-                    if ssh -i /home/id_rsa -p 2225 ubuntu@${APP_SERVER} "pkill java"
+                    if ssh -i /home/id_rsa ubuntu@${APP_SERVER} "pkill java"
                     then echo 1
                     else echo 2
                     fi
-                    ssh -i /home/id_rsa -p 2225 ubuntu@${APP_SERVER} "nohup java -jar qa.war --JDBC_DATABASE_URL=${DB_URL} --JDBC_DATABASE_USERNAME=${USERNAMEI} --JDBC_DATABASE_PASSWORD=${PASSWORD}" > /dev/null &
+                    ssh -i /home/id_rsa ubuntu@${APP_SERVER} "nohup java -jar qa.war --JDBC_DATABASE_URL=${DB_URL} --JDBC_DATABASE_USERNAME=${USERNAMEI} --JDBC_DATABASE_PASSWORD=${PASSWORD}" > /dev/null &
                 '''
 //                 sh "mvn package -D PORT=9636 -D JDBC_DATABASE_USERNAME=${USERNAMEI} -D JDBC_DATABASE_PASSWORD=${PASSWORD} -D JDBC_DATABASE_URL=${DB_URL}"
 //                 sh "ls -al target/"
