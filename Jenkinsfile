@@ -29,7 +29,7 @@ pipeline {
             steps {
                 withCredentials([file(credentialsId: 'ssh_privat_file', variable: 'my_private_key')]) {
                     sh '''
-                        if ssh -i /home/id_rsa ubuntu@${APP_SERVER} "pkill java"
+                        if ssh -i ${my_private_key} ubuntu@${APP_SERVER} "pkill java"
                         then echo 1
                         else echo 2
                         fi
